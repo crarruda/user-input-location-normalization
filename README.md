@@ -110,6 +110,12 @@ It is **not** intended for individual-level geolocation or high-precision spatia
 
 ---
 
+## Dependencies
+
+This implementation relies on an openly licensed cities gazetteer
+(Countries States Cities Database, MIT License) as a reference vocabulary
+for deterministic country-level normalization.
+
 ## Citation and Reuse
 
 If you reuse or adapt this method in academic work, please cite the repository and clearly state the chosen level of geographic aggregation and its implications.
