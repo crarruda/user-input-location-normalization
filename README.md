@@ -83,6 +83,7 @@ normalize_location(
     use_geocoding: bool = True,
     geolocator = None,
 ) -> str
+```
 
 The function applies a strict resolution hierarchy:
 
