@@ -5,12 +5,10 @@
 User-reported location fields are a common component of user-generated content (UGC) platforms.
 However, these fields are typically free-text, optional, and highly heterogeneous, resulting in extremely high cardinality and inconsistent geographic semantics.
 
-This repository provides a deterministic method to **normalize noisy user-input location strings into a controlled country-level taxonomy**
+This repository provides a deterministic method to **normalize noisy user-input location strings into a controlled country-level taxonomy**.
 It handles explicit ambiguity, missingness, and non-geographic inputs.
 
 The method has been developed and reused across multiple academic and applied projects involving large-scale UGC data, including tourism and mobility analysis, where robustness and interpretability are preferred over probabilistic inference.
-
----
 
 ## Problem Definition
 
@@ -37,17 +35,17 @@ The goal of this repository is **not** to infer precise user location, but to **
 
 The normalization strategy follows four explicit principles:
 
-1. **Country-level resolution**
-   Normalization is performed at the country level only.
+1. **Country-level resolution**  
+   Normalization is performed at the country level only.  
    Finer geographic inference (city, region) is intentionally avoided due to unreliability and bias in self-reported data.
 
-2. **Deterministic over probabilistic logic**
+2. **Deterministic over probabilistic logic**  
    Rule-based matching is preferred over probabilistic or model-based inference to ensure transparency, reproducibility, and auditability.
 
-3. **Explicit handling of ambiguity**
+3. **Explicit handling of ambiguity**  
    Inputs that cannot be reliably mapped are preserved as *unidentified* rather than force-assigned.
 
-4. **Stability across datasets**
+4. **Stability across datasets**  
    The method prioritizes consistent behavior across datasets and projects over maximal recall in any single case.
 
 ---
@@ -56,16 +54,16 @@ The normalization strategy follows four explicit principles:
 
 The normalization process consists of the following stages:
 
-1. **Pre-cleaning**
+1. **Pre-cleaning**  
    Basic normalization of casing, whitespace, punctuation, and known noise patterns.
 
-2. **Rule-based matching**
+2. **Rule-based matching**  
    Matching against a curated mapping of country names, common variants, abbreviations, and demonyms.
 
-3. **Controlled vocabulary assignment**
+3. **Controlled vocabulary assignment**  
    Valid inputs are mapped to a predefined list of standardized country identifiers.
 
-4. **Fallback and ambiguity handling**
+4. **Fallback and ambiguity handling**  
    Inputs that are empty, non-geographic, or ambiguous are assigned to an explicit `unidentified` category.
 
 At no stage is geographic inference extrapolated beyond what the input plausibly supports.
@@ -76,13 +74,22 @@ At no stage is geographic inference extrapolated beyond what the input plausibly
 
 The repository exposes a single public entry point:
 
-function normalize_location()
+normalize_location(
+    raw_location: str | None,
+    *,
+    cities_df: pandas.DataFrame,
+    unidentified_label: str = "unidentified",
+    use_geocoding: bool = True,
+    geolocator = None,
+) -> str
 
 The function applies a strict resolution hierarchy:
 
 1. Deterministic pattern-based matching using a reference cities gazetteer
 2. Optional external geocoding fallback (e.g. Nominatim)
 3. Explicit assignment to an unidentified category
+
+Batch processing, caching, and pipeline orchestration are intentionally out of scope.
 
 ---
 
@@ -126,19 +133,33 @@ It is **not** intended for individual-level geolocation or high-precision spatia
 
 ## Dependencies
 
-This implementation relies on an openly licensed cities gazetteer
-(Countries States Cities Database, MIT License) as a reference vocabulary
-for deterministic country-level normalization.
+This implementation relies on an openly licensed reference cities gazetteer:
+
+**Countries States Cities Database**
+https://github.com/dr5hn/countries-states-cities-database
+License: MIT
+
+The dataset is used exclusively as a reference vocabulary and is included
+unchanged for reproducibility.
 
 ## Citation and Reuse
 
-If you reuse or adapt this method in academic work, please cite the repository and clearly state the chosen level of geographic aggregation and its implications.
+If you reuse or adapt this method in academic work, please cite the repository
+and clearly state the chosen level of geographic aggregation and its implications.
 
 ---
 
 ## License
 
-[Specify license]
+**Code**
+
+The code in this repository is released under the MIT License.
+See the LICENSE file for details.
+
+**Third-party data**
+
+The included cities.csv dataset is licensed under the MIT License
+by its original authors and is redistributed here under the same terms.
 
 ---
 
