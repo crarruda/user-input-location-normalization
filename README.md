@@ -74,6 +74,7 @@ At no stage is geographic inference extrapolated beyond what the input plausibly
 
 The repository exposes a single public entry point:
 
+```python
 normalize_location(
     raw_location: str | None,
     *,
