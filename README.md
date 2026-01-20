@@ -72,6 +72,20 @@ At no stage is geographic inference extrapolated beyond what the input plausibly
 
 ---
 
+## Public API
+
+The repository exposes a single public entry point:
+
+function normalize_location()
+
+The function applies a strict resolution hierarchy:
+
+1. Deterministic pattern-based matching using a reference cities gazetteer
+2. Optional external geocoding fallback (e.g. Nominatim)
+3. Explicit assignment to an unidentified category
+
+---
+
 ## Validation Strategy
 
 The method has been validated empirically through repeated reuse across independent datasets, focusing on:
