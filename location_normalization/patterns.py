@@ -1,5 +1,5 @@
 import re
-from src.cities import resolve_shared_state_code
+from .cities import resolve_shared_state_code
 
 # Public API (used by normalizer.py)
 

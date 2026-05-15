@@ -1,10 +1,10 @@
-# exemples/basic_usage.py
+# examples/basic_usage.py
 
 # Example script demonstrating basic usage of the location normalization module.
 from geopy.geocoders import Nominatim
 
-from src.cities import load_cities, prepare_cities_df
-from src import normalize_location
+from location_normalization.cities import load_cities, prepare_cities_df
+from location_normalization import normalize_location
 
 
 # Setup
