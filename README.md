@@ -70,11 +70,27 @@ At no stage is geographic inference extrapolated beyond what the input plausibly
 
 ---
 
+## Installation
+
+Install from source as an editable package:
+
+```bash
+pip install -e .
+```
+
+This exposes the package under the import name `location_normalization`
+and installs the required runtime dependencies (`pandas`, `geopy`).
+A pinned alternative is provided as `requirements.txt`.
+
+---
+
 ## Public API
 
 The repository exposes a single public entry point:
 
 ```python
+from location_normalization import normalize_location
+
 normalize_location(
     raw_location: str | None,
     *,
